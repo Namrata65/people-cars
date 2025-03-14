@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import AddPerson from "./AddPerson";
 import AddCar from "./AddCar";
 import CarList from "./CarList.jsx";
-import { EditOutlined, DeleteOutlined, CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 
 const GET_PEOPLE = gql`
@@ -43,29 +48,25 @@ const PersonList = () => {
   if (loading) return <Spin />;
   if (error) return <p>Error: {error.message}</p>;
 
-  // DELETE PERSON FUNCTION
   const handleDelete = async (id) => {
     try {
       await deletePerson({ variables: { id } });
       message.success("Person deleted successfully");
-      refetch(); // Refresh the list after deletion
+      refetch();
     } catch (err) {
       message.error("Error deleting person");
     }
   };
 
-  // EDIT MODE TOGGLE
   const handleEdit = (person) => {
     setEditingPersonId(person.id);
     setEditedValues({ firstName: person.firstName, lastName: person.lastName });
   };
 
-  // HANDLE INPUT CHANGE
   const handleChange = (e, field) => {
     setEditedValues({ ...editedValues, [field]: e.target.value });
   };
 
-  // HANDLE SAVE
   const handleSave = async (id) => {
     try {
       await updatePerson({
@@ -81,26 +82,38 @@ const PersonList = () => {
 
   return (
     <>
-      <Card title="People With Cars">
+      <Card className="card-header-title">
+        <h2>Person With Cars</h2>
         <AddPerson />
-        {( (data && data?.people.length) > 0) ? <AddCar /> : null}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "36px", padding: "50px" }}>
+        {(data && data?.people.length) > 0 ? <AddCar /> : null}
+        <div className="person-list-container">
           {data.people.map((person) => (
             <Card
               key={person.id}
-              style={{ width: 500 }}
-              extra={<Link to={`/people/${person.id}`}>Learn More</Link>}
               actions={[
                 editingPersonId === person.id ? (
-                  <>
-                    <CheckOutlined key="save" onClick={() => handleSave(person.id)} style={{ color: "green" }} />
-                    <CloseOutlined key="cancel" onClick={() => setEditingPersonId(null)} style={{ color: "red" }} />
-                  </>
+                  <div className="buttons-container">
+                    <CheckOutlined
+                      key="save"
+                      onClick={() => handleSave(person.id)}
+                      style={{ color: "green" }}
+                    />
+                    <CloseOutlined
+                      key="cancel"
+                      onClick={() => setEditingPersonId(null)}
+                      style={{ color: "red" }}
+                    />
+                  </div>
                 ) : (
                   <EditOutlined key="edit" onClick={() => handleEdit(person)} />
                 ),
-                <DeleteOutlined key="delete" onClick={() => handleDelete(person.id)} style={{ color: "red" }} />,
+                <DeleteOutlined
+                  key="delete"
+                  onClick={() => handleDelete(person.id)}
+                  style={{ color: "red" }}
+                />,
               ]}
+              className="person-list"
             >
               {editingPersonId === person.id ? (
                 <div>
@@ -117,8 +130,15 @@ const PersonList = () => {
                   />
                 </div>
               ) : (
-                <h3>{person.firstName} {person.lastName}</h3>
+                <h3>
+                  {person.firstName} {person.lastName}
+                </h3>
               )}
+              <div className="person-header">
+                <Link to={`/people/${person.id}`} className="learn-more-btn">
+                  Learn More
+                </Link>
+              </div>
               <CarList personId={person.id} />
             </Card>
           ))}

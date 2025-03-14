@@ -21,8 +21,8 @@ const PersonDetails = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <Card title={`${data.person.firstName} ${data.person.lastName}`} style={{ width: 400 }}>
+    <div className="person-details-card-container" style={{ padding: 20 }}>
+      <Card title={`${data.person.firstName} ${data.person.lastName}`} style={{ width: "100%" }}>
         <p>ID: {data.person.id}</p>
         <h3>Cars:</h3>
         <CarList personId={data.person.id} />

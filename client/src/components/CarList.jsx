@@ -58,18 +58,18 @@ const CarList = ({ personId }) => {
 
   const personCars = data.cars.filter((car) => car.personId === personId);
 
-  // DELETE CAR FUNCTION
+
   const handleDelete = async (id) => {
     try {
       await deleteCar({ variables: { id } });
       message.success("Car deleted successfully");
-      refetch(); // Refresh the list after deletion
+      refetch(); 
     } catch (err) {
       message.error("Error deleting car");
     }
   };
 
-  // EDIT MODE TOGGLE
+  
   const handleEdit = (car) => {
     setEditingCarId(car.id);
     setEditedValues({
@@ -81,17 +81,17 @@ const CarList = ({ personId }) => {
     });
   };
 
-  // HANDLE INPUT CHANGE
+  
   const handleChange = (e, field) => {
     setEditedValues({ ...editedValues, [field]: e.target.value });
   };
 
-  // HANDLE PERSON CHANGE
+  
   const handlePersonChange = (value) => {
     setEditedValues({ ...editedValues, personId: value });
   };
 
-  // HANDLE SAVE
+  
   const handleSave = async (id) => {
     try {
       await updateCar({
@@ -115,16 +115,17 @@ const CarList = ({ personId }) => {
   return (
     <List
       dataSource={personCars}
+      className="car-list-container"
       renderItem={(car) => (
         <Card
           key={car.id}
-          style={{ marginTop: 10 }}
+          className="car-details-card"
           actions={[
             editingCarId === car.id ? (
-              <>
+              <div className="buttons-container">
                 <CheckOutlined key="save" onClick={() => handleSave(car.id)} style={{ color: "green" }} />
                 <CloseOutlined key="cancel" onClick={() => setEditingCarId(null)} style={{ color: "red" }} />
-              </>
+              </div>
             ) : (
               <EditOutlined key="edit" onClick={() => handleEdit(car)} />
             ),
@@ -132,7 +133,7 @@ const CarList = ({ personId }) => {
           ]}
         >
           {editingCarId === car.id ? (
-            <div>
+            <div className="edit-car-list">
               <Input value={editedValues.year} onChange={(e) => handleChange(e, "year")} placeholder="Year" />
               <Input value={editedValues.make} onChange={(e) => handleChange(e, "make")} placeholder="Make" style={{ marginTop: "8px" }} />
               <Input value={editedValues.model} onChange={(e) => handleChange(e, "model")} placeholder="Model" style={{ marginTop: "8px" }} />
