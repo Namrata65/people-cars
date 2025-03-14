@@ -21,11 +21,13 @@ body {
 }
 
 .add-person-form {
+  margin: 0 auto;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
+      max-width: 725px;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: center;
+      column-gap: 2rem;
   input {
     border: none;
     border-radius: 5px;
@@ -72,11 +74,14 @@ body {
 
 }
 .car-list-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: flex !important;
+
+max-width: 1200px !important;
+  flex-flow: row wrap !important;
   gap: 36px;
   width: 100%;
+  justify-content: center;
+  align-items: center;
   
   ul {
     list-style: none;
@@ -88,11 +93,47 @@ body {
     overflow: scroll;
 
   }
+
+  .ant-spin-nested-loading{
+    width: 100%;
+  }
 }
+
+.ant-list-items{
+
+  display: flex !important;
+
+max-width: 1200px !important;
+  flex-flow: row wrap !important;
+  gap: 36px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
 .car-details-card {
   width: 100%;
   border-radius: 5px;
   
+  .ant-card-body{
+ 
+    display: flex;
+flex-flow: row !important;  
+  gap: 3rem;
+    justify-content: center;
+    align-items: center; 
+  }
+}
+.edit-car-list{
+
+  display: flex;
+  flex-flow: row !important;  
+    gap: 3rem;
+      justify-content: center;
+      align-items: center; 
+
 }
 
 .buttons-container {
